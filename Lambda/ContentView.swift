@@ -201,18 +201,20 @@ struct LambdaInfoView: View {
                         .bold()
 
                     Text("""
-Lambda is an upcoming project by a highschool student. From Arithmetic, to Trigonometry and even Calculus, Lambda's goal is to provide a free, fun and easy-to-use educational platform for mathematics. Lambda is still a newborn baby in the mobile application environment, but everything starts in 0.
-
-
-
-
-
-
-
-
-
-
-""")
+                         Lambda is an upcoming project made by highschool students. From Arithmetic, to Trigonometry and even Calculus, Lambda's goal is to provide a free, fun and easy-to-use educational platform for mathematics. Lambda is still a newborn baby in the mobile application environment, but everything starts in 0.
+                         
+                         Knowledge should be free.
+                         
+                         
+                         
+                         
+                         
+                         
+                         
+                         
+                         
+                         """)
+                        .multilineTextAlignment(.center)
                         .foregroundColor(.white)
                         .font(.body)
                         .padding(.horizontal)
@@ -267,6 +269,7 @@ struct LoopingVideoPlayer: UIViewRepresentable {
 
 struct HomeView: View {
     @State private var bookmarkedCourses: Set<String> = []
+    @State private var bookmarkedOrder: [String] = []
 
     let courses: [(String, AnyView)] = [
         ("Arithmetic", AnyView(ArithmeticView())),
@@ -275,6 +278,13 @@ struct HomeView: View {
         ("Trigonometry", AnyView(TrigonometryView())),
         ("Calculus", AnyView(CalculusView()))
     ]
+    var sortedCourses: [(String, AnyView)] {
+        let bookmarked = bookmarkedOrder.compactMap { name in
+            courses.first(where: { $0.0 == name })
+        }
+        let unbookmarked = courses.filter { !bookmarkedOrder.contains($0.0) }
+        return bookmarked + unbookmarked
+    }
 
     var body: some View {
         NavigationView {
@@ -283,7 +293,7 @@ struct HomeView: View {
 
                 ScrollView {
                     VStack(spacing: 20) {
-                        ForEach(courses, id: \.0) { course in
+                        ForEach(sortedCourses, id: \.0) { course in
                             ZStack(alignment: .topTrailing) {
                                 NavigationLink(destination: course.1) {
                                     RoundedRectangle(cornerRadius: 20)
@@ -325,16 +335,18 @@ struct HomeView: View {
 
                                 // ✅ Bookmark Button
                                 Button(action: {
-                                    if bookmarkedCourses.contains(course.0) {
-                                        bookmarkedCourses.remove(course.0)
+                                    if let index = bookmarkedOrder.firstIndex(of: course.0) {
+                                        bookmarkedOrder.remove(at: index)
                                     } else {
-                                        bookmarkedCourses.insert(course.0)
+                                        bookmarkedOrder.insert(course.0, at: 0) // Add to top
                                     }
                                 }) {
-                                    Image(systemName: bookmarkedCourses.contains(course.0) ? "bookmark.fill" : "bookmark")
+                                    Image(systemName: bookmarkedOrder.contains(course.0) ? "bookmark.fill" : "bookmark")
                                         .foregroundColor(Color.blue)
                                         .font(.system(size: 22))
                                         .padding(12)
+                                }
+
                                 }
                             }
                             .padding(.horizontal)
@@ -346,10 +358,10 @@ struct HomeView: View {
                 .background(Color(red: 0.15, green: 0.15, blue: 0.15))
             }
             .background(Color(red: 0.15, green: 0.15, blue: 0.15).ignoresSafeArea())
+            .navigationViewStyle(StackNavigationViewStyle())
         }
-        .navigationViewStyle(StackNavigationViewStyle())
     }
-}
+
 
 
 // Your course detail views (left unchanged)
@@ -560,7 +572,30 @@ struct TrigonometryView: View {
 
     var body: some View {
         VStack(spacing: 0) {
-            // Your existing UI code here...
+            HStack {
+                Text("Trigonometry")
+                    .font(.system(size: 28, weight: .bold))
+                    .foregroundColor(Color(red: 0.3608, green: 0.8784, blue: 0.6118))
+                Spacer()
+            }
+            .padding(.horizontal)
+            .padding(.top, 10)
+
+            // Grey line with label
+            HStack {
+                Rectangle()
+                    .fill(Color.gray)
+                    .frame(height: 1)
+                Text("Trigonometric functions")
+                    .foregroundColor(.gray)
+                    .font(.subheadline)
+                    .multilineTextAlignment(.center)
+                    .padding(.horizontal, 5)
+                Rectangle()
+                    .fill(Color.gray)
+                    .frame(height: 1)
+            }
+            .padding(.horizontal)
 
             ScrollView {
                 LazyVGrid(columns: columns, spacing: 16) {
@@ -593,7 +628,7 @@ struct TrigonometryView: View {
                 Color(red: 0.15, green: 0.15, blue: 0.15).ignoresSafeArea()
                 ScrollView {  // Added ScrollView for scrollable content
                     VStack(alignment: .leading, spacing: 20) {  // Increased spacing
-                        Text("Module 1: Right Triangles")
+                        Text("Module 1: Right triangles")
                             .foregroundColor(Color(red: 0.3608, green: 0.8784, blue: 0.6118))
                             .font(.title2)
                             .bold()
@@ -619,10 +654,42 @@ struct TrigonometryView: View {
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
                 }
             }
-        } else {
-            // Rest of your code...
         }
-    }
+        if index == 2 {
+            ZStack {
+                Color(red: 0.15, green: 0.15, blue: 0.15).ignoresSafeArea()
+                ScrollView {  // Added ScrollView for scrollable content
+                    VStack(alignment: .leading, spacing: 20) {  // Increased spacing
+                        Text("Module 2: Trigonometric functions")
+                            .foregroundColor(Color(red: 0.3608, green: 0.8784, blue: 0.6118))
+                            .font(.title2)
+                            .bold()
+                            .padding(.top, 20)  // Add top padding
+                        
+                        Text("In the previous module, we saw the existing sides of a right triangle relative to a certain angle. With the reciprocals of said sides, six functions are created, called the Trigonometric functions:")  // Your existing text
+                            .foregroundColor(.white)
+                            .font(.body)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                        
+                        // Added image with styling
+                        Image("equation-3")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(maxWidth: .infinity)
+                        Text("And each of these functions have their respective inverse functions:")
+                            .foregroundColor(.white)
+                            .font(.body)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                        Image("equation-2-2")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(maxWidth: .infinity)
+                    }
+                    .padding(.horizontal)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+                }
+            }
+        }    }
 
 }
 
