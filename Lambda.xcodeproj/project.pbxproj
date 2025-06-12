@@ -1,0 +1,613 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		BA8A7FCA2DF5F21F0027DD01 /* UwU.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = BA8A7FC92DF5F21F0027DD01 /* UwU.mp4 */; };
+		BA9E65982DF25CDA00481F3A /* LambdaApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9E65972DF25CDA00481F3A /* LambdaApp.swift */; };
+		BA9E659A2DF25CDA00481F3A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9E65992DF25CDA00481F3A /* ContentView.swift */; };
+		BA9E659C2DF25CDB00481F3A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BA9E659B2DF25CDB00481F3A /* Assets.xcassets */; };
+		BA9E65A02DF25CDB00481F3A /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BA9E659F2DF25CDB00481F3A /* Preview Assets.xcassets */; };
+		BA9E65AA2DF25CDB00481F3A /* LambdaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9E65A92DF25CDB00481F3A /* LambdaTests.swift */; };
+		BA9E65B42DF25CDB00481F3A /* LambdaUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9E65B32DF25CDB00481F3A /* LambdaUITests.swift */; };
+		BA9E65B62DF25CDB00481F3A /* LambdaUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9E65B52DF25CDB00481F3A /* LambdaUITestsLaunchTests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		BA9E65A62DF25CDB00481F3A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BA9E658C2DF25CDA00481F3A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BA9E65932DF25CDA00481F3A;
+			remoteInfo = Lambda;
+		};
+		BA9E65B02DF25CDB00481F3A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BA9E658C2DF25CDA00481F3A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BA9E65932DF25CDA00481F3A;
+			remoteInfo = Lambda;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		BA8A7FC92DF5F21F0027DD01 /* UwU.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = UwU.mp4; sourceTree = "<group>"; };
+		BA9E65942DF25CDA00481F3A /* Lambda.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Lambda.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		BA9E65972DF25CDA00481F3A /* LambdaApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LambdaApp.swift; sourceTree = "<group>"; };
+		BA9E65992DF25CDA00481F3A /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		BA9E659B2DF25CDB00481F3A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		BA9E659D2DF25CDB00481F3A /* Lambda.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Lambda.entitlements; sourceTree = "<group>"; };
+		BA9E659F2DF25CDB00481F3A /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		BA9E65A52DF25CDB00481F3A /* LambdaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LambdaTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		BA9E65A92DF25CDB00481F3A /* LambdaTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LambdaTests.swift; sourceTree = "<group>"; };
+		BA9E65AF2DF25CDB00481F3A /* LambdaUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LambdaUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		BA9E65B32DF25CDB00481F3A /* LambdaUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LambdaUITests.swift; sourceTree = "<group>"; };
+		BA9E65B52DF25CDB00481F3A /* LambdaUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LambdaUITestsLaunchTests.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		BA9E65912DF25CDA00481F3A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BA9E65A22DF25CDB00481F3A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BA9E65AC2DF25CDB00481F3A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		BA9E658B2DF25CDA00481F3A = {
+			isa = PBXGroup;
+			children = (
+				BA9E65962DF25CDA00481F3A /* Lambda */,
+				BA9E65A82DF25CDB00481F3A /* LambdaTests */,
+				BA9E65B22DF25CDB00481F3A /* LambdaUITests */,
+				BA9E65952DF25CDA00481F3A /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		BA9E65952DF25CDA00481F3A /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				BA9E65942DF25CDA00481F3A /* Lambda.app */,
+				BA9E65A52DF25CDB00481F3A /* LambdaTests.xctest */,
+				BA9E65AF2DF25CDB00481F3A /* LambdaUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		BA9E65962DF25CDA00481F3A /* Lambda */ = {
+			isa = PBXGroup;
+			children = (
+				BA8A7FC92DF5F21F0027DD01 /* UwU.mp4 */,
+				BA9E65972DF25CDA00481F3A /* LambdaApp.swift */,
+				BA9E65992DF25CDA00481F3A /* ContentView.swift */,
+				BA9E659B2DF25CDB00481F3A /* Assets.xcassets */,
+				BA9E659D2DF25CDB00481F3A /* Lambda.entitlements */,
+				BA9E659E2DF25CDB00481F3A /* Preview Content */,
+			);
+			path = Lambda;
+			sourceTree = "<group>";
+		};
+		BA9E659E2DF25CDB00481F3A /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				BA9E659F2DF25CDB00481F3A /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		BA9E65A82DF25CDB00481F3A /* LambdaTests */ = {
+			isa = PBXGroup;
+			children = (
+				BA9E65A92DF25CDB00481F3A /* LambdaTests.swift */,
+			);
+			path = LambdaTests;
+			sourceTree = "<group>";
+		};
+		BA9E65B22DF25CDB00481F3A /* LambdaUITests */ = {
+			isa = PBXGroup;
+			children = (
+				BA9E65B32DF25CDB00481F3A /* LambdaUITests.swift */,
+				BA9E65B52DF25CDB00481F3A /* LambdaUITestsLaunchTests.swift */,
+			);
+			path = LambdaUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		BA9E65932DF25CDA00481F3A /* Lambda */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BA9E65B92DF25CDB00481F3A /* Build configuration list for PBXNativeTarget "Lambda" */;
+			buildPhases = (
+				BA9E65902DF25CDA00481F3A /* Sources */,
+				BA9E65912DF25CDA00481F3A /* Frameworks */,
+				BA9E65922DF25CDA00481F3A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Lambda;
+			productName = Lambda;
+			productReference = BA9E65942DF25CDA00481F3A /* Lambda.app */;
+			productType = "com.apple.product-type.application";
+		};
+		BA9E65A42DF25CDB00481F3A /* LambdaTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BA9E65BC2DF25CDB00481F3A /* Build configuration list for PBXNativeTarget "LambdaTests" */;
+			buildPhases = (
+				BA9E65A12DF25CDB00481F3A /* Sources */,
+				BA9E65A22DF25CDB00481F3A /* Frameworks */,
+				BA9E65A32DF25CDB00481F3A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				BA9E65A72DF25CDB00481F3A /* PBXTargetDependency */,
+			);
+			name = LambdaTests;
+			productName = LambdaTests;
+			productReference = BA9E65A52DF25CDB00481F3A /* LambdaTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		BA9E65AE2DF25CDB00481F3A /* LambdaUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BA9E65BF2DF25CDB00481F3A /* Build configuration list for PBXNativeTarget "LambdaUITests" */;
+			buildPhases = (
+				BA9E65AB2DF25CDB00481F3A /* Sources */,
+				BA9E65AC2DF25CDB00481F3A /* Frameworks */,
+				BA9E65AD2DF25CDB00481F3A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				BA9E65B12DF25CDB00481F3A /* PBXTargetDependency */,
+			);
+			name = LambdaUITests;
+			productName = LambdaUITests;
+			productReference = BA9E65AF2DF25CDB00481F3A /* LambdaUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		BA9E658C2DF25CDA00481F3A /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1420;
+				LastUpgradeCheck = 1420;
+				TargetAttributes = {
+					BA9E65932DF25CDA00481F3A = {
+						CreatedOnToolsVersion = 14.2;
+					};
+					BA9E65A42DF25CDB00481F3A = {
+						CreatedOnToolsVersion = 14.2;
+						TestTargetID = BA9E65932DF25CDA00481F3A;
+					};
+					BA9E65AE2DF25CDB00481F3A = {
+						CreatedOnToolsVersion = 14.2;
+						TestTargetID = BA9E65932DF25CDA00481F3A;
+					};
+				};
+			};
+			buildConfigurationList = BA9E658F2DF25CDA00481F3A /* Build configuration list for PBXProject "Lambda" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = BA9E658B2DF25CDA00481F3A;
+			productRefGroup = BA9E65952DF25CDA00481F3A /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				BA9E65932DF25CDA00481F3A /* Lambda */,
+				BA9E65A42DF25CDB00481F3A /* LambdaTests */,
+				BA9E65AE2DF25CDB00481F3A /* LambdaUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		BA9E65922DF25CDA00481F3A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BA8A7FCA2DF5F21F0027DD01 /* UwU.mp4 in Resources */,
+				BA9E65A02DF25CDB00481F3A /* Preview Assets.xcassets in Resources */,
+				BA9E659C2DF25CDB00481F3A /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BA9E65A32DF25CDB00481F3A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BA9E65AD2DF25CDB00481F3A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		BA9E65902DF25CDA00481F3A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BA9E659A2DF25CDA00481F3A /* ContentView.swift in Sources */,
+				BA9E65982DF25CDA00481F3A /* LambdaApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BA9E65A12DF25CDB00481F3A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BA9E65AA2DF25CDB00481F3A /* LambdaTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BA9E65AB2DF25CDB00481F3A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BA9E65B42DF25CDB00481F3A /* LambdaUITests.swift in Sources */,
+				BA9E65B62DF25CDB00481F3A /* LambdaUITestsLaunchTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		BA9E65A72DF25CDB00481F3A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = BA9E65932DF25CDA00481F3A /* Lambda */;
+			targetProxy = BA9E65A62DF25CDB00481F3A /* PBXContainerItemProxy */;
+		};
+		BA9E65B12DF25CDB00481F3A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = BA9E65932DF25CDA00481F3A /* Lambda */;
+			targetProxy = BA9E65B02DF25CDB00481F3A /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		BA9E65B72DF25CDB00481F3A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		BA9E65B82DF25CDB00481F3A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+			};
+			name = Release;
+		};
+		BA9E65BA2DF25CDB00481F3A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Lambda/Lambda.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"Lambda/Preview Content\"";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
+				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 12.7;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "What-.Lambda";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		BA9E65BB2DF25CDB00481F3A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Lambda/Lambda.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"Lambda/Preview Content\"";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
+				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 12.7;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "What-.Lambda";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		BA9E65BD2DF25CDB00481F3A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				MACOSX_DEPLOYMENT_TARGET = 12.7;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "What-.LambdaTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Lambda.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Lambda";
+			};
+			name = Debug;
+		};
+		BA9E65BE2DF25CDB00481F3A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				MACOSX_DEPLOYMENT_TARGET = 12.7;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "What-.LambdaTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Lambda.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Lambda";
+			};
+			name = Release;
+		};
+		BA9E65C02DF25CDB00481F3A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				MACOSX_DEPLOYMENT_TARGET = 12.7;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "What-.LambdaUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Lambda;
+			};
+			name = Debug;
+		};
+		BA9E65C12DF25CDB00481F3A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				MACOSX_DEPLOYMENT_TARGET = 12.7;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "What-.LambdaUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Lambda;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		BA9E658F2DF25CDA00481F3A /* Build configuration list for PBXProject "Lambda" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BA9E65B72DF25CDB00481F3A /* Debug */,
+				BA9E65B82DF25CDB00481F3A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		BA9E65B92DF25CDB00481F3A /* Build configuration list for PBXNativeTarget "Lambda" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BA9E65BA2DF25CDB00481F3A /* Debug */,
+				BA9E65BB2DF25CDB00481F3A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		BA9E65BC2DF25CDB00481F3A /* Build configuration list for PBXNativeTarget "LambdaTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BA9E65BD2DF25CDB00481F3A /* Debug */,
+				BA9E65BE2DF25CDB00481F3A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		BA9E65BF2DF25CDB00481F3A /* Build configuration list for PBXNativeTarget "LambdaUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BA9E65C02DF25CDB00481F3A /* Debug */,
+				BA9E65C12DF25CDB00481F3A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = BA9E658C2DF25CDA00481F3A /* Project object */;
+}
