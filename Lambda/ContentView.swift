@@ -569,7 +569,7 @@ struct ElementalGeometryView: View {
 
 struct TrigonometryView: View {
     let columns = Array(repeating: GridItem(.flexible(), spacing: 16), count: 4)
-
+    
     var body: some View {
         VStack(spacing: 0) {
             HStack {
@@ -580,7 +580,7 @@ struct TrigonometryView: View {
             }
             .padding(.horizontal)
             .padding(.top, 10)
-
+            
             // Grey line with label
             HStack {
                 Rectangle()
@@ -596,7 +596,7 @@ struct TrigonometryView: View {
                     .frame(height: 1)
             }
             .padding(.horizontal)
-
+            
             ScrollView {
                 LazyVGrid(columns: columns, spacing: 16) {
                     ForEach(1...20, id: \.self) { index in
@@ -605,7 +605,7 @@ struct TrigonometryView: View {
                                 RoundedRectangle(cornerRadius: 12)
                                     .stroke(Color(red: 0.3608, green: 0.8784, blue: 0.6118), lineWidth: 2)
                                     .frame(height: 60)
-
+                                
                                 Text("\(index)")
                                     .foregroundColor(.white)
                                     .font(.headline)
@@ -620,7 +620,7 @@ struct TrigonometryView: View {
         .background(Color(red: 0.15, green: 0.15, blue: 0.15).ignoresSafeArea())
         .navigationBarTitleDisplayMode(.inline)
     }
-
+    
     @ViewBuilder
     func destinationView(for index: Int) -> some View {
         if index == 1 {
@@ -689,137 +689,137 @@ struct TrigonometryView: View {
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
                 }
             }
-        }    }
-
-}
-
-
-
-struct CalculusView: View {
-    let columns = Array(repeating: GridItem(.flexible(), spacing: 16), count: 4)
-
-    var body: some View {
-        VStack(spacing: 0) {
-            // Custom top title
-            HStack {
-                Text("Calculus")
-                    .font(.system(size: 28, weight: .bold))
-                    .foregroundColor(Color(red: 0.3608, green: 0.8784, blue: 0.6118))
-                Spacer()
-            }
-            .padding(.horizontal)
-            .padding(.top, 10)
-
-            // Grey line with label
-            HStack {
-                Rectangle()
-                    .fill(Color.gray)
-                    .frame(height: 1)
-                Text("Limits")
-                    .foregroundColor(.gray)
-                    .font(.subheadline)
-                    .multilineTextAlignment(.center)
-                    .padding(.horizontal, 5)
-                Rectangle()
-                    .fill(Color.gray)
-                    .frame(height: 1)
-            }
-            .padding(.horizontal)
-
-            // Numbered grid
-            ScrollView {
-                LazyVGrid(columns: columns, spacing: 16) {
-                    ForEach(1...20, id: \.self) { index in
-                        NavigationLink(destination:
-                            ZStack {
+        }
+    }
+    
+    
+    
+    struct CalculusView: View {
+        let columns = Array(repeating: GridItem(.flexible(), spacing: 16), count: 4)
+        
+        var body: some View {
+            VStack(spacing: 0) {
+                // Custom top title
+                HStack {
+                    Text("Calculus")
+                        .font(.system(size: 28, weight: .bold))
+                        .foregroundColor(Color(red: 0.3608, green: 0.8784, blue: 0.6118))
+                    Spacer()
+                }
+                .padding(.horizontal)
+                .padding(.top, 10)
+                
+                // Grey line with label
+                HStack {
+                    Rectangle()
+                        .fill(Color.gray)
+                        .frame(height: 1)
+                    Text("Limits")
+                        .foregroundColor(.gray)
+                        .font(.subheadline)
+                        .multilineTextAlignment(.center)
+                        .padding(.horizontal, 5)
+                    Rectangle()
+                        .fill(Color.gray)
+                        .frame(height: 1)
+                }
+                .padding(.horizontal)
+                
+                // Numbered grid
+                ScrollView {
+                    LazyVGrid(columns: columns, spacing: 16) {
+                        ForEach(1...20, id: \.self) { index in
+                            NavigationLink(destination:
+                                            ZStack {
                                 Color(red: 0.15, green: 0.15, blue: 0.15).ignoresSafeArea()
                                 Text("Detail for item \(index)")
                                     .foregroundColor(Color(red: 0.3608, green: 0.8784, blue: 0.6118))
                                     .font(.title)
                                     .bold()
                             }
-                        ) {
-                            ZStack {
-                                RoundedRectangle(cornerRadius: 12)
-                                    .stroke(Color(red: 0.3608, green: 0.8784, blue: 0.6118), lineWidth: 2)
-                                    .frame(height: 60)
-
-                                Text("\(index)")
-                                    .foregroundColor(.white)
-                                    .font(.headline)
+                            ) {
+                                ZStack {
+                                    RoundedRectangle(cornerRadius: 12)
+                                        .stroke(Color(red: 0.3608, green: 0.8784, blue: 0.6118), lineWidth: 2)
+                                        .frame(height: 60)
+                                    
+                                    Text("\(index)")
+                                        .foregroundColor(.white)
+                                        .font(.headline)
+                                }
                             }
                         }
                     }
+                    .padding(.horizontal)
+                    .padding(.top)
                 }
-                .padding(.horizontal)
-                .padding(.top)
             }
-        }
-        .background(Color(red: 0.15, green: 0.15, blue: 0.15).ignoresSafeArea())
-        .navigationBarTitleDisplayMode(.inline) // Optional: makes back button behave normally
-    }
-}
-
-///
-//Below are the TabView icons; Home, Forum, Practice, etc.
-//Above are the HomeView options
-///
-
-struct ForumView: View {
-    var body: some View {
-        VStack(spacing: 0) {
-            CustomNavigationBar()
-            ZStack {
-                Color(red: 0.15, green: 0.15, blue: 0.15).ignoresSafeArea()
-                Text("Forum Screen")
-                    .foregroundColor(Color(red: 0.3608, green: 0.8784, blue: 0.6118))
-            }
+            .background(Color(red: 0.15, green: 0.15, blue: 0.15).ignoresSafeArea())
+            .navigationBarTitleDisplayMode(.inline) // Optional: makes back button behave normally
         }
     }
-}
-
-struct PracticeView: View {
-    var body: some View {
-        VStack(spacing: 0) {
-            CustomNavigationBar()
-            ZStack {
-                Color(red: 0.15, green: 0.15, blue: 0.15).ignoresSafeArea()
-                Text("Practice Screen")
-                    .foregroundColor(Color(red: 0.3608, green: 0.8784, blue: 0.6118))
+    
+    ///
+    //Below are the TabView icons; Home, Forum, Practice, etc.
+    //Above are the HomeView options
+    ///
+    
+    struct ForumView: View {
+        var body: some View {
+            VStack(spacing: 0) {
+                CustomNavigationBar()
+                ZStack {
+                    Color(red: 0.15, green: 0.15, blue: 0.15).ignoresSafeArea()
+                    Text("Forum Screen")
+                        .foregroundColor(Color(red: 0.3608, green: 0.8784, blue: 0.6118))
+                }
             }
         }
     }
-}
-
-struct CombatView: View {
-    var body: some View {
-        VStack(spacing: 0) {
-            CustomNavigationBar()
-            ZStack {
-                Color(red: 0.15, green: 0.15, blue: 0.15).ignoresSafeArea()
-                Text("Combat Screen")
-                    .foregroundColor(Color(red: 0.3608, green: 0.8784, blue: 0.6118))
+    
+    struct PracticeView: View {
+        var body: some View {
+            VStack(spacing: 0) {
+                CustomNavigationBar()
+                ZStack {
+                    Color(red: 0.15, green: 0.15, blue: 0.15).ignoresSafeArea()
+                    Text("Practice Screen")
+                        .foregroundColor(Color(red: 0.3608, green: 0.8784, blue: 0.6118))
+                }
             }
         }
     }
-}
-
-struct ProfileView: View {
-    var body: some View {
-        VStack(spacing: 0) {
-            CustomNavigationBar()
-            ZStack {
-                Color(red: 0.15, green: 0.15, blue: 0.15).ignoresSafeArea()
-                Text("Profile Screen")
-                    .foregroundColor(Color(red: 0.3608, green: 0.8784, blue: 0.6118))
+    
+    struct CombatView: View {
+        var body: some View {
+            VStack(spacing: 0) {
+                CustomNavigationBar()
+                ZStack {
+                    Color(red: 0.15, green: 0.15, blue: 0.15).ignoresSafeArea()
+                    Text("Combat Screen")
+                        .foregroundColor(Color(red: 0.3608, green: 0.8784, blue: 0.6118))
+                }
             }
         }
     }
-}
-
-
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
+    
+    struct ProfileView: View {
+        var body: some View {
+            VStack(spacing: 0) {
+                CustomNavigationBar()
+                ZStack {
+                    Color(red: 0.15, green: 0.15, blue: 0.15).ignoresSafeArea()
+                    Text("Profile Screen")
+                        .foregroundColor(Color(red: 0.3608, green: 0.8784, blue: 0.6118))
+                }
+            }
+        }
+    }
+    
+    
+    struct ContentView_Previews: PreviewProvider {
+        static var previews: some View {
+            ContentView()
+        }
     }
 }
