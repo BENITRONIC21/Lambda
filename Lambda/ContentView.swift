@@ -769,53 +769,91 @@ struct CalculusView: View {
 
 struct ForumView: View {
     var body: some View {
-        VStack(spacing: 0) {
-            CustomNavigationBar()
-            ZStack {
-                Color(red: 0.15, green: 0.15, blue: 0.15).ignoresSafeArea()
-                Text("Forum Screen")
-                    .foregroundColor(Color(red: 0.3608, green: 0.8784, blue: 0.6118))
+        NavigationView { // 👈 Add this
+            VStack(spacing: 0) {
+                CustomNavigationBar()
+
+                ScrollView {
+                    Text("Forum Screen")
+                        .foregroundColor(Color(red: 0.3608, green: 0.8784, blue: 0.6118))
+                        .font(.title)
+                        .bold()
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        .padding()
+                }
+                .background(Color(red: 0.15, green: 0.15, blue: 0.15))
             }
+            .background(Color(red: 0.15, green: 0.15, blue: 0.15).ignoresSafeArea())
         }
+        .navigationViewStyle(StackNavigationViewStyle()) // 👈 Optional for consistent behavior on iPhone/iPad
     }
 }
 
 struct PracticeView: View {
     var body: some View {
-        VStack(spacing: 0) {
-            CustomNavigationBar()
-            ZStack {
-                Color(red: 0.15, green: 0.15, blue: 0.15).ignoresSafeArea()
-                Text("Practice Screen")
-                    .foregroundColor(Color(red: 0.3608, green: 0.8784, blue: 0.6118))
+        NavigationView { // 👈 Add this
+            VStack(spacing: 0) {
+                CustomNavigationBar()
+
+                ScrollView {
+                    Text("Practice Screen")
+                        .foregroundColor(Color(red: 0.3608, green: 0.8784, blue: 0.6118))
+                        .font(.title)
+                        .bold()
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        .padding()
+                }
+                .background(Color(red: 0.15, green: 0.15, blue: 0.15))
             }
+            .background(Color(red: 0.15, green: 0.15, blue: 0.15).ignoresSafeArea())
         }
+        .navigationViewStyle(StackNavigationViewStyle()) // 👈 Optional for consistent behavior on iPhone/iPad
     }
 }
 
+
+
 struct CombatView: View {
     var body: some View {
-        VStack(spacing: 0) {
-            CustomNavigationBar()
-            ZStack {
-                Color(red: 0.15, green: 0.15, blue: 0.15).ignoresSafeArea()
-                Text("Combat Screen")
-                    .foregroundColor(Color(red: 0.3608, green: 0.8784, blue: 0.6118))
+        NavigationView { // 👈 Add this
+            VStack(spacing: 0) {
+                CustomNavigationBar()
+
+                ScrollView {
+                    Text("Combat Screen")
+                        .foregroundColor(Color(red: 0.3608, green: 0.8784, blue: 0.6118))
+                        .font(.title)
+                        .bold()
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        .padding()
+                }
+                .background(Color(red: 0.15, green: 0.15, blue: 0.15))
             }
+            .background(Color(red: 0.15, green: 0.15, blue: 0.15).ignoresSafeArea())
         }
+        .navigationViewStyle(StackNavigationViewStyle()) // 👈 Optional for consistent behavior on iPhone/iPad
     }
 }
 
 struct ProfileView: View {
     var body: some View {
-        VStack(spacing: 0) {
-            CustomNavigationBar()
-            ZStack {
-                Color(red: 0.15, green: 0.15, blue: 0.15).ignoresSafeArea()
-                Text("Profile Screen")
-                    .foregroundColor(Color(red: 0.3608, green: 0.8784, blue: 0.6118))
+        NavigationView { // 👈 Add this
+            VStack(spacing: 0) {
+                CustomNavigationBar()
+
+                ScrollView {
+                    Text("Profile Screen")
+                        .foregroundColor(Color(red: 0.3608, green: 0.8784, blue: 0.6118))
+                        .font(.title)
+                        .bold()
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        .padding()
+                }
+                .background(Color(red: 0.15, green: 0.15, blue: 0.15))
             }
+            .background(Color(red: 0.15, green: 0.15, blue: 0.15).ignoresSafeArea())
         }
+        .navigationViewStyle(StackNavigationViewStyle()) // 👈 Optional for consistent behavior on iPhone/iPad
     }
 }
 
