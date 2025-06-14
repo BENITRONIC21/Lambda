@@ -5,6 +5,16 @@
 //  Created by Benito Antuñano Idargo on 05/06/25.
 //
 
+// Colors:
+//
+// Mint green:    Color(red: 0.3608, green: 0.8784, blue: 0.6118)
+//
+// Dark gray:     Color(red: 0.45, green: 0.45, blue: 0.45)
+//
+// Gray:          .gray
+//
+// White:         .white
+
 import SwiftUI
 import AVKit
 import UIKit
@@ -262,11 +272,261 @@ struct LoopingVideoPlayer: UIViewRepresentable {
     func updateUIView(_ uiView: UIView, context: Context) {}
 }
 
+import SwiftUI
+
+enum ToolMode {
+    case move, draw, postIt
+}
+
+struct PostIt: Identifiable {
+    let id = UUID()
+    var position: CGPoint
+    var color: Color
+    var text: String
+}
+
+struct BlackboardView: View {
+    @State private var mode: ToolMode = .move
+    @State private var paths: [Path] = []
+    @State private var currentPath = Path()
+    @State private var scale: CGFloat = 1.0
+    @State private var offset: CGSize = .zero
+    @State private var pencilColor: Color = .white
+    @State private var postItColor: Color = .yellow
+    @State private var postIts: [PostIt] = []
+
+    @GestureState private var gestureOffset: CGSize = .zero
+    @GestureState private var varGestureScale: CGFloat = 1.0
+
+    var body: some View {
+        GeometryReader { geometry in
+            ZStack {
+                Color(red: 0.15, green: 0.15, blue: 0.15)
+                    .ignoresSafeArea()
+
+                CanvasWrapper {
+                    canvasView
+                        .scaleEffect(scale * varGestureScale)
+                        .offset(x: offset.width + gestureOffset.width, y: offset.height + gestureOffset.height)
+                        // Applying main drag and zoom gesture
+                        .gesture(mainCanvasGesture)
+                        // Applying tap gesture specifically for post-its
+                        .simultaneousGesture(postItPlacementGesture(in: geometry.size)) // Changed to a drag gesture for location
+                }
+
+                // 🛠 Floating Toolbar pinned to top-left corner
+                VStack(alignment: .leading, spacing: 12) {
+                    ToolButton(icon: "hand.tap", isSelected: mode == .move) {
+                        mode = .move
+                    }
+                    ToolButton(icon: "pencil", isSelected: mode == .draw) {
+                        mode = .draw
+                    }
+                    ColorPicker("", selection: $pencilColor)
+                        .labelsHidden()
+                        .frame(width: 36, height: 36)
+
+                    ToolButton(icon: "note.text", isSelected: mode == .postIt) {
+                        mode = .postIt
+                    }
+                    ColorPicker("", selection: $postItColor)
+                        .labelsHidden()
+                        .frame(width: 36, height: 36)
+
+                    ToolButton(icon: "arrow.uturn.backward") {
+                        if !paths.isEmpty {
+                            paths.removeLast()
+                        } else if !postIts.isEmpty {
+                            postIts.removeLast()
+                        }
+                    }
+                }
+                .padding()
+                .background(Color.black)
+                .cornerRadius(12)
+                .padding(.leading)
+                .padding(.top, 60) // push it below the nav bar
+                .frame(maxWidth: .infinity, alignment: .topLeading) // pin to top-left!
+            }
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .principal) {
+                    Text("Blackboard")
+                        .foregroundColor(Color(red: 0.3608, green: 0.8784, blue: 0.6118))
+                        .font(.headline)
+                        .bold()
+                }
+            }
+
+        }
+    }
+    
+
+    // MARK: - Canvas View
+    var canvasView: some View {
+        ZStack {
+            DotGridView()
+            ForEach(paths.indices, id: \.self) { index in
+                paths[index].stroke(pencilColor, lineWidth: 2)
+            }
+            currentPath.stroke(pencilColor, lineWidth: 2)
+
+            ForEach(postIts) { postIt in
+                PostItView(postIt: postIt, onUpdate: { updated in
+                    if let index = postIts.firstIndex(where: { $0.id == updated.id }) {
+                        postIts[index] = updated
+                    }
+                })
+                .position(postIt.position) // Apply position here
+            }
+        }
+        .contentShape(Rectangle()) // Make the whole ZStack tappable
+    }
+
+// MARK: - Post it view
+    struct PostItView: View {
+        @State var postIt: PostIt
+        var onUpdate: (PostIt) -> Void
+
+        @FocusState private var isFocused: Bool
+
+        // Define the height of a single post-it note
+        let singlePostItHeight: CGFloat = 120.0 // Adjusted for better proportion, you can fine-tune this
+
+        var body: some View {
+            // Wrap TextField in a ZStack to ensure frame is respected
+            ZStack {
+                TextField("Note", text: $postIt.text, axis: .vertical) // Use axis: .vertical for multiline input
+                    .font(.system(size: 12))
+                    .padding(8)
+                    .background(postIt.color)
+                    .cornerRadius(8)
+            }
+            // Apply frame and fixedSize to the ZStack wrapper
+            .frame(width: 120, height: singlePostItHeight * 4)
+            .fixedSize(horizontal: false, vertical: true)
+            .focused($isFocused)
+            .onAppear {
+                isFocused = true
+            }
+            .onChange(of: postIt.text) { _ in
+                onUpdate(postIt)
+            }
+        }
+    }
+
+    // MARK: - Gestures
+    // Combined gesture for move (drag + magnify) and draw (drag)
+    var mainCanvasGesture: some Gesture {
+        DragGesture(minimumDistance: mode == .draw ? 0.1 : 0) // Only require minimumDistance for drawing
+            .updating($gestureOffset) { value, state, _ in // Use updating for gestureOffset
+                if mode == .move {
+                    state = value.translation
+                }
+            }
+            .onChanged { value in
+                if mode == .draw { // Only handle draw logic here
+                    let point = CGPoint(
+                        x: (value.location.x - offset.width) / scale,
+                        y: (value.location.y - offset.height) / scale
+                    )
+                    if currentPath.isEmpty {
+                        currentPath.move(to: point)
+                    } else {
+                        currentPath.addLine(to: point)
+                    }
+                }
+            }
+            .onEnded { value in
+                if mode == .move {
+                    offset.width += value.translation.width
+                    offset.height += value.translation.height
+                } else if mode == .draw {
+                    paths.append(currentPath)
+                    currentPath = Path()
+                }
+            }
+        .simultaneously(with: MagnificationGesture()
+            .updating($varGestureScale) { value, state, _ in
+                if mode == .move {
+                    state = value
+                }
+            }
+            .onEnded { value in
+                if mode == .move {
+                    scale *= value
+                }
+            }
+        )
+    }
+
+    // Drag gesture with minimumDistance 0 for tap location for adding Post-it notes
+    func postItPlacementGesture(in size: CGSize) -> some Gesture {
+        DragGesture(minimumDistance: 0) // Use DragGesture with minimumDistance 0 for tap-like behavior
+            .onEnded { value in
+                guard mode == .postIt else { return }
+                // Convert tap location taking current offset & scale into account
+                let transformed = CGPoint(
+                    x: (value.location.x - offset.width) / scale,
+                    y: (value.location.y - offset.height) / scale
+                )
+                postIts.append(PostIt(position: transformed, color: postItColor, text: ""))
+            }
+    }
+}
+
+// MARK: - Tool Button
+struct ToolButton: View {
+    let icon: String
+    var isSelected: Bool = false
+    var action: () -> Void
+
+    var body: some View {
+        Button(action: action) {
+            Image(systemName: icon)
+                .foregroundColor(.white)
+                .frame(width: 36, height: 36)
+                .background(isSelected ? Color.green : Color.black)
+                .cornerRadius(8)
+        }
+    }
+}
+
+
+// MARK: - Dot Grid
+struct DotGridView: View {
+    let spacing: CGFloat = 20
+
+    var body: some View {
+        GeometryReader { geometry in
+            Path { path in
+                for x in stride(from: 0, to: geometry.size.width, by: spacing) {
+                    for y in stride(from: 0, to: geometry.size.height, by: spacing) {
+                        path.addEllipse(in: CGRect(x: x, y: y, width: 2, height: 2))
+                    }
+                }
+            }
+            .fill(Color.gray.opacity(0.3))
+        }
+    }
+}
+struct CanvasWrapper<Content: View>: View {
+    let content: () -> Content
+
+    var body: some View {
+        GeometryReader { geo in
+            ScrollView([.horizontal, .vertical], showsIndicators: false) {
+                content()
+                    .frame(width: 5000, height: 5000)
+            }
+            .frame(width: geo.size.width, height: geo.size.height)
+        }
+    }
+}
 
 
 
 // ✅ Each view uses the custom top bar
-
 struct HomeView: View {
     @State private var bookmarkedCourses: Set<String> = []
     @State private var bookmarkedOrder: [String] = []
@@ -789,29 +1049,127 @@ struct ForumView: View {
     }
 }
 
+
 struct PracticeView: View {
+    @State private var selectedBranch: String = "Choose branch"
+    
+    let branches = ["Arithmetic", "Algebra", "Geometry", "Trigonometry", "Calculus"]
+    
     var body: some View {
-        NavigationView { // 👈 Add this
+        NavigationView {
             VStack(spacing: 0) {
                 CustomNavigationBar()
-
+                
                 ScrollView {
-                    Text("Practice Screen")
-                        .foregroundColor(Color(red: 0.3608, green: 0.8784, blue: 0.6118))
-                        .font(.title)
-                        .bold()
-                        .frame(maxWidth: .infinity, maxHeight: .infinity)
-                        .padding()
+                    VStack(spacing: 20) {
+                        // 🔷 Main Exercise Generator Rectangle
+                        RoundedRectangle(cornerRadius: 20)
+                            .fill(Color(red: 0.15, green: 0.15, blue: 0.15))
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 20)
+                                    .stroke(Color(red: 0.3608, green: 0.8784, blue: 0.6118), lineWidth: 2)
+                            )
+                            .frame(height: 600) // Increased height to fit the button
+                            .overlay(
+                                VStack(alignment: .leading, spacing: 16) {
+                                    Text("Exercise generator")
+                                        .font(.title2)
+                                        .bold()
+                                        .foregroundColor(Color(red: 0.3608, green: 0.8784, blue: 0.6118))
+                                        .padding(.top, 12)
+                                    
+                                    // 🔽 Branch Dropdown
+                                    Menu {
+                                        ForEach(branches, id: \.self) { branch in
+                                            Button(action: {
+                                                selectedBranch = branch
+                                            }) {
+                                                Text(branch)
+                                            }
+                                        }
+                                    } label: {
+                                        HStack {
+                                            Text(selectedBranch)
+                                                .foregroundColor(.gray)
+                                            Spacer()
+                                            Image(systemName: "chevron.down")
+                                                .foregroundColor(.gray)
+                                        }
+                                        .padding()
+                                        .background(
+                                            RoundedRectangle(cornerRadius: 10)
+                                                .stroke(Color(red: 0.3608, green: 0.8784, blue: 0.6118), lineWidth: 2)
+                                        )
+                                    }
+                                    
+                                    // ✅ Generate Button (shows only if branch is selected)
+                                    if selectedBranch != "Choose branch" {
+                                        HStack {
+                                            Spacer()
+
+                                            Button(action: {
+                                                print("Generating exercise for \(selectedBranch)")
+                                            })
+                                            {
+                                                Text("Generate exercise")
+                                                    .foregroundColor(Color(red: 0.15, green: 0.15, blue: 0.15))
+                                                    .fontWeight(.bold)
+                                                    .padding()
+                                                    .frame(width: 315) // You can adjust width if needed
+                                                    .background(
+                                                        RoundedRectangle(cornerRadius: 10)
+                                                            .fill(Color(red: 0.3608, green: 0.8784, blue: 0.6118))
+                                                    )
+                                            }
+
+                                            Spacer()
+                                            
+                                        }
+                                        .transition(.opacity)
+
+                                        .transition(.opacity)
+                                    }
+                                    ZStack {
+                                        RoundedRectangle(cornerRadius: 10)
+                                            .stroke(Color(red: 0.3608, green: 0.8784, blue: 0.6118), lineWidth: 2)
+                                            .frame(height: 200)
+
+                                        Text(":3")
+                                            .foregroundColor(.gray)
+                                            .font(.headline)
+                                        }
+                                    HStack {
+                                        Spacer()
+                                        NavigationLink(destination: BlackboardView()) {
+                                            Text("Open Blackboard")
+                                                .foregroundColor(Color(red: 0.15, green: 0.15, blue: 0.15))
+                                                .padding()
+                                                .background(Color(red: 0.3608, green: 0.8784, blue: 0.6118))
+                                                .cornerRadius(10)
+                                        }
+                                        Spacer()
+                                    }
+                                    .padding(.top, 10)
+
+                                    .padding(.horizontal)
+                                    .padding(.top, 10)
+
+                                    Spacer()
+                                }
+                                .padding(.horizontal, 16)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                            )
+                            .padding(.horizontal)
+                    }
+                    .padding(.top)
                 }
                 .background(Color(red: 0.15, green: 0.15, blue: 0.15))
             }
             .background(Color(red: 0.15, green: 0.15, blue: 0.15).ignoresSafeArea())
         }
-        .navigationViewStyle(StackNavigationViewStyle()) // 👈 Optional for consistent behavior on iPhone/iPad
+        .navigationViewStyle(StackNavigationViewStyle())
     }
 }
-
-
 
 struct CombatView: View {
     var body: some View {
