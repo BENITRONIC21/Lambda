@@ -1026,26 +1026,207 @@ struct CalculusView: View {
 //Below are the TabView icons; Home, Forum, Practice, etc.
 //Above are the HomeView options
 ///
+import SwiftUI
+
+// Make sure your Post model looks like this:
+struct Post: Identifiable {
+    let id = UUID()
+    var title: String
+    var content: String
+    var postType: String
+    var category: String
+}
 
 struct ForumView: View {
+    @State private var selectedCategory: String = "All posts"
+    @State private var posts: [Post] = []
+
+    let categories = ["All posts", "Problems", "Discussions"]
+
+    var filteredPosts: [Post] {
+        switch selectedCategory {
+        case "Problems":
+            return posts.filter { $0.postType == "Problem" }
+        case "Discussions":
+            return posts.filter { $0.postType == "Discussion" }
+        default:
+            return posts
+        }
+    }
+
     var body: some View {
-        NavigationView { // 👈 Add this
+        NavigationView {
             VStack(spacing: 0) {
                 CustomNavigationBar()
 
                 ScrollView {
-                    Text("Forum Screen")
-                        .foregroundColor(Color(red: 0.3608, green: 0.8784, blue: 0.6118))
-                        .font(.title)
-                        .bold()
-                        .frame(maxWidth: .infinity, maxHeight: .infinity)
-                        .padding()
+                    VStack(alignment: .leading, spacing: 16) {
+                        // Header + Create post button
+                        HStack {
+                            Text("Forum")
+                                .foregroundColor(Color(red: 0.3608, green: 0.8784, blue: 0.6118))
+                                .font(.title)
+                                .bold()
+
+                            Spacer()
+
+                            NavigationLink(destination: CreatePostView(posts: $posts)) {
+                                Text("Create post +")
+                                    .foregroundColor(Color(red: 0.15, green: 0.15, blue: 0.15))
+                                    .padding(.horizontal, 12)
+                                    .padding(.vertical, 8)
+                                    .background(Color(red: 0.3608, green: 0.8784, blue: 0.6118))
+                                    .cornerRadius(8)
+                            }
+                        }
+                        .padding(.horizontal)
+                        .padding(.top)
+
+                        // Selector bar
+                        HStack(spacing: 0) {
+                            ForEach(categories, id: \.self) { category in
+                                Button(action: {
+                                    selectedCategory = category
+                                }) {
+                                    Text(category)
+                                        .foregroundColor(selectedCategory == category
+                                                         ? Color(red: 0.3608, green: 0.8784, blue: 0.6118)
+                                                         : Color.white)
+                                        .frame(maxWidth: .infinity)
+                                        .padding(.vertical, 10)
+                                }
+                            }
+                        }
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 10)
+                                .stroke(Color(red: 0.3608, green: 0.8784, blue: 0.6118), lineWidth: 2)
+                        )
+                        .padding(.horizontal)
+
+                        // Posts list with newest first
+                        VStack(spacing: 12) {
+                            ForEach(Array(filteredPosts.reversed()), id: \.id) { post in
+                                HStack {
+                                    VStack(alignment: .leading, spacing: 4) {
+                                        Text(post.title)
+                                            .foregroundColor(.white)
+                                            .font(.headline)
+                                        Text(post.content)
+                                            .foregroundColor(.gray)
+                                            .lineLimit(2)
+                                    }
+                                    Spacer()
+                                }
+                                .padding()
+                                .background(
+                                    RoundedRectangle(cornerRadius: 12)
+                                        .fill(Color(red: 0.18, green: 0.18, blue: 0.18))
+                                )
+                                .padding(.horizontal)
+                            }
+                        }
+                        .padding(.top, 8)
+                    }
+                    .padding(.bottom, 20)
                 }
                 .background(Color(red: 0.15, green: 0.15, blue: 0.15))
             }
             .background(Color(red: 0.15, green: 0.15, blue: 0.15).ignoresSafeArea())
         }
-        .navigationViewStyle(StackNavigationViewStyle()) // 👈 Optional for consistent behavior on iPhone/iPad
+        .navigationViewStyle(StackNavigationViewStyle())
+    }
+}
+
+struct CreatePostView: View {
+    @Environment(\.dismiss) var dismiss
+
+    @Binding var posts: [Post]
+
+    @State private var title: String = ""
+    @State private var content: String = ""
+
+    @State private var selectedPostType = "Post"
+    @State private var selectedCategory = "N/A"
+
+    let postTypes = ["Post", "Problem", "Discussion"]
+    let categories = ["N/A", "Arithmetic", "Algebra", "Geometry", "Trigonometry", "Calculus"]
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 20) {
+            TextField("Title", text: $title)
+                .padding()
+                .foregroundColor(.white)
+                .background(Color.clear)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 10)
+                        .stroke(Color(red: 0.3608, green: 0.8784, blue: 0.6118), lineWidth: 2)
+                )
+
+            // Post type picker
+            Picker("Post Type", selection: $selectedPostType) {
+                ForEach(postTypes, id: \.self) { type in
+                    Text(type).tag(type)
+                }
+            }
+            .pickerStyle(SegmentedPickerStyle())
+            .padding(.horizontal)
+
+            // Category picker
+            Picker("Category", selection: $selectedCategory) {
+                ForEach(categories, id: \.self) { category in
+                    Text(category).tag(category)
+                }
+            }
+            .pickerStyle(MenuPickerStyle())
+            .padding(.horizontal)
+
+            TextEditor(text: $content)
+                .frame(height: 200)
+                .padding()
+                .background(Color(red: 0.15, green: 0.15, blue: 0.15))
+                .overlay(
+                    RoundedRectangle(cornerRadius: 10)
+                        .stroke(Color(red: 0.3608, green: 0.8784, blue: 0.6118), lineWidth: 2)
+                )
+
+            Spacer()
+
+            Button(action: {
+                let newPost = Post(
+                    title: title,
+                    content: content,
+                    postType: selectedPostType,
+                    category: selectedCategory
+                )
+                posts.append(newPost)
+                dismiss()
+            }) {
+                Text("Post")
+                    .foregroundColor(Color(red: 0.15, green: 0.15, blue: 0.15))
+                    .padding()
+                    .frame(maxWidth: .infinity)
+                    .background(Color(red: 0.3608, green: 0.8784, blue: 0.6118))
+                    .cornerRadius(10)
+            }
+        }
+        .padding()
+        .background(Color(red: 0.15, green: 0.15, blue: 0.15))
+        .navigationTitle("New Post")
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .principal) {
+                Text("New Post")
+                    .font(.headline)
+                    .foregroundColor(Color(red: 0.3608, green: 0.8784, blue: 0.6118))
+            }
+
+            ToolbarItem(placement: .cancellationAction) {
+                Button("Cancel") {
+                    dismiss()
+                }
+                .foregroundColor(.red)
+            }
+        }
     }
 }
 
@@ -1134,7 +1315,7 @@ struct PracticeView: View {
                                             .stroke(Color(red: 0.3608, green: 0.8784, blue: 0.6118), lineWidth: 2)
                                             .frame(height: 200)
 
-                                        Text(":3")
+                                        Text("Your exercise will be  generated here.")
                                             .foregroundColor(.gray)
                                             .font(.headline)
                                         }
