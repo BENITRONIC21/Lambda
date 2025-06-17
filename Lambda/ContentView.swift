@@ -1173,47 +1173,396 @@ struct PracticeView: View {
 
 struct CombatView: View {
     var body: some View {
-        NavigationView { // 👈 Add this
+        NavigationView {
             VStack(spacing: 0) {
                 CustomNavigationBar()
-
+                
                 ScrollView {
-                    Text("Combat Screen")
-                        .foregroundColor(Color(red: 0.3608, green: 0.8784, blue: 0.6118))
-                        .font(.title)
-                        .bold()
-                        .frame(maxWidth: .infinity, maxHeight: .infinity)
-                        .padding()
+                    VStack(spacing: 20) {
+                        // 🛡️ Combat Card
+                        ZStack {
+                            RoundedRectangle(cornerRadius: 20)
+                                .fill(Color(red: 0.15, green: 0.15, blue: 0.15))
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 20)
+                                        .stroke(Color(red: 0.3608, green: 0.8784, blue: 0.6118), lineWidth: 2)
+                                )
+
+                            VStack(spacing: 24) {
+                                Spacer().frame(height: 30)
+
+                                ZStack {
+                                    RoundedRectangle(cornerRadius: 20)
+                                        .fill(Color.white.opacity(0.1))
+                                        .frame(width: 100, height: 100)
+
+                                    Image(systemName: "shield.lefthalf.fill")
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(width: 50, height: 50)
+                                        .foregroundColor(Color(red: 0.3608, green: 0.8784, blue: 0.6118))
+                                }
+
+                                Text("Challenge yourself in a fast-paced math battle! Solve problems quickly to win.")
+                                    .font(.body)
+                                    .multilineTextAlignment(.center)
+                                    .foregroundColor(.white)
+                                    .padding(.horizontal)
+
+                                Button(action: {
+                                    print("Combat started!")
+                                }) {
+                                    RoundedRectangle(cornerRadius: 12)
+                                        .fill(Color(red: 0.3608, green: 0.8784, blue: 0.6118))
+                                        .frame(height: 50)
+                                        .overlay(
+                                            Text("Combat")
+                                                .fontWeight(.bold)
+                                                .foregroundColor(Color(red: 0.15, green: 0.15, blue: 0.15))
+                                        )
+                                }
+                                .padding(.horizontal, 60)
+
+                                Spacer().frame(height: 30)
+                            }
+                            .padding()
+                        }
+                        .padding(.horizontal)
+
+                        // 🏆 Leaderboard Card
+                        ZStack {
+                            RoundedRectangle(cornerRadius: 20)
+                                .fill(Color(red: 0.15, green: 0.15, blue: 0.15))
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 20)
+                                        .stroke(Color(red: 0.3608, green: 0.8784, blue: 0.6118), lineWidth: 2)
+                                )
+
+                            VStack(alignment: .leading, spacing: 12) {
+                                Text("Leaderboard")
+                                    .font(.title2)
+                                    .bold()
+                                    .foregroundColor(Color(red: 0.3608, green: 0.8784, blue: 0.6118))
+                                    .padding(.bottom, 4)
+
+                                ForEach(1...10, id: \.self) { index in
+                                    HStack {
+                                        Text("\(index). User\(index)")
+                                        Spacer()
+                                        Text("0 pts")
+                                    }
+                                    .foregroundColor(.white)
+                                    .padding(.horizontal, 4)
+                                }
+                            }
+                            .padding()
+                        }
+                        .padding(.horizontal)
+
+                        Spacer().frame(height: 30)
+                    }
+                    .padding(.top)
                 }
+                .background(Color(red: 0.15, green: 0.15, blue: 0.15))
+
                 .background(Color(red: 0.15, green: 0.15, blue: 0.15))
             }
             .background(Color(red: 0.15, green: 0.15, blue: 0.15).ignoresSafeArea())
         }
-        .navigationViewStyle(StackNavigationViewStyle()) // 👈 Optional for consistent behavior on iPhone/iPad
+        .navigationViewStyle(StackNavigationViewStyle())
     }
 }
+
+
+
+
+import SwiftUI
 
 struct ProfileView: View {
+    @State private var username: String = "Grigori P."
+    @State private var email: String = "grigorip2002@gmail.com"
+    @State private var instagram: String = "Instagram"
+    @State private var youtube: String = "Youtube"
+    @State private var facebook: String = "Facebook"
+    @State private var showSettings = false
+    @State private var problemsSolved: Int = 67
+    @State private var combatWins: Int = 67
+    @State private var friendsCount: Int = 67
+    @State private var profileImage: Image? = Image("user_avatar")
+
     var body: some View {
-        NavigationView { // 👈 Add this
+        NavigationView {
             VStack(spacing: 0) {
-                CustomNavigationBar()
+                CustomNavigationBar() // Assuming you defined this elsewhere
 
                 ScrollView {
-                    Text("Profile Screen")
-                        .foregroundColor(Color(red: 0.3608, green: 0.8784, blue: 0.6118))
-                        .font(.title)
-                        .bold()
-                        .frame(maxWidth: .infinity, maxHeight: .infinity)
-                        .padding()
+                    VStack(spacing: 20) {
+                        ZStack(alignment: .topTrailing) {
+                            RoundedRectangle(cornerRadius: 20)
+                                .fill(Color(red: 0.15, green: 0.15, blue: 0.15))
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 20)
+                                        .stroke(Color(red: 0.3608, green: 0.8784, blue: 0.6118), lineWidth: 2)
+                                )
+                                .frame(maxWidth: .infinity)
+                                .padding(.horizontal)
+
+                            VStack(spacing: 16) {
+                                (profileImage ?? Image("user_avatar"))
+                                    .resizable()
+                                    .scaledToFill()
+                                    .frame(width: 100, height: 100)
+                                    .clipShape(Circle())
+                                    .overlay(
+                                        Circle()
+                                            .stroke(Color(red: 0.3608, green: 0.8784, blue: 0.6118), lineWidth: 3)
+                                    )
+                                    .shadow(radius: 5)
+
+                                Text(username)
+                                    .font(.title2)
+                                    .bold()
+                                    .foregroundColor(.white)
+
+                                Text(email)
+                                    .font(.subheadline)
+                                    .foregroundColor(.gray)
+
+                                Divider()
+                                    .background(Color(red: 0.3608, green: 0.8784, blue: 0.6118))
+                                    .padding(.horizontal)
+
+                                HStack(spacing: 0) {
+                                    Spacer()
+                                    StatView(label: "Problems Solved", value: "\(problemsSolved)")
+                                    Spacer()
+                                    StatView(label: "Combat Wins", value: "\(combatWins)")
+                                    Spacer()
+                                    StatView(label: "Friends", value: "\(friendsCount)")
+                                    Spacer()
+                                }
+                                .padding(.vertical, 8)
+                            }
+                            .padding()
+                        }
+                        .overlay(
+                            Button(action: {
+                                showSettings.toggle()
+                            }) {
+                                Image(systemName: "gearshape.fill")
+                                    .font(.title2)
+                                    .padding()
+                                    .foregroundColor(Color(red: 0.3608, green: 0.8784, blue: 0.6118))
+                            }
+                            .padding(.trailing, 40)
+                            .padding(.top, 20),
+                            alignment: .topTrailing
+                        )
+
+                        Spacer(minLength: 30)
+                    }
+                    .padding(.top)
                 }
                 .background(Color(red: 0.15, green: 0.15, blue: 0.15))
             }
             .background(Color(red: 0.15, green: 0.15, blue: 0.15).ignoresSafeArea())
+            .sheet(isPresented: $showSettings) {
+                SettingsSheet(
+                    isPresented: $showSettings,
+                    username: $username,
+                    email: $email,
+                    instagram: $instagram,
+                    youtube: $youtube,
+                    facebook: $facebook,
+                    profileImage: $profileImage
+                )
+            }
         }
-        .navigationViewStyle(StackNavigationViewStyle()) // 👈 Optional for consistent behavior on iPhone/iPad
+        .navigationViewStyle(StackNavigationViewStyle())
     }
 }
+
+
+
+import SwiftUI
+import UIKit
+
+struct SettingsSheet: View {
+    @Binding var isPresented: Bool
+    @Binding var username: String
+    @Binding var email: String
+    @Binding var instagram: String
+    @Binding var youtube: String
+    @Binding var facebook: String
+    @Binding var profileImage: Image?
+
+    @State private var showingImagePicker = false
+    @State private var inputImage: UIImage?
+
+    var body: some View {
+        NavigationView {
+            ScrollView {
+                VStack(spacing: 24) {
+
+                    VStack(spacing: 16) {
+                        profileTextField(title: "Username", text: $username)
+                        profileTextField(title: "Email", text: $email)
+                        profileTextField(title: "Instagram", text: $instagram)
+                        profileTextField(title: "YouTube", text: $youtube)
+                        profileTextField(title: "Facebook", text: $facebook)
+                    }
+                    .padding()
+                    .background(Color(red: 0.25, green: 0.25, blue: 0.25))
+                    .cornerRadius(20)
+
+                    VStack(spacing: 16) {
+                        Text("Profile Picture")
+                            .font(.headline)
+                            .foregroundColor(Color(red: 0.36, green: 0.87, blue: 0.61))
+
+                        if let image = profileImage {
+                            image
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 120, height: 120)
+                                .clipShape(RoundedRectangle(cornerRadius: 16))
+                                .shadow(radius: 8)
+                        } else {
+                            Image(systemName: "person.circle.fill")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 120, height: 120)
+                                .foregroundColor(.gray)
+                                .clipShape(RoundedRectangle(cornerRadius: 16))
+                                .shadow(radius: 8)
+                        }
+
+                        Button("Change Picture") {
+                            showingImagePicker = true
+                        }
+                        .foregroundColor(.black)
+                        .padding()
+                        .frame(maxWidth: .infinity)
+                        .background(Color(red: 0.36, green: 0.87, blue: 0.61))
+                        .cornerRadius(10)
+                    }
+                    .padding()
+                    .background(Color(red: 0.25, green: 0.25, blue: 0.25))
+                    .cornerRadius(20)
+                }
+                .padding()
+            }
+            .navigationTitle("Settings")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button("Close") {
+                        isPresented = false
+                    }
+                }
+            }
+            .sheet(isPresented: $showingImagePicker, onDismiss: loadImage) {
+                ImagePicker(image: $inputImage)
+            }
+            .background(Color(red: 0.15, green: 0.15, blue: 0.15))
+        }
+    }
+
+    func profileTextField(title: String, text: Binding<String>) -> some View {
+        TextField("", text: text)
+            .foregroundColor(.white)
+            .padding()
+            .background(Color(red: 0.2, green: 0.2, blue: 0.2))
+            .cornerRadius(8)
+            .disableAutocorrection(true)
+            .autocapitalization(.none)
+    }
+
+    func loadImage() {
+        guard let inputImage = inputImage else { return }
+        profileImage = Image(uiImage: inputImage)
+    }
+}
+
+// MARK: - Placeholder Extension
+
+extension View {
+    func placeholder<Content: View>(
+        when shouldShow: Bool,
+        alignment: Alignment = .leading,
+        @ViewBuilder placeholder: () -> Content
+    ) -> some View {
+        ZStack(alignment: alignment) {
+            if shouldShow {
+                placeholder()
+            }
+            self
+        }
+    }
+}
+
+// MARK: - Image Picker
+
+import SwiftUI
+import UIKit
+
+struct ImagePicker: UIViewControllerRepresentable {
+    @Binding var image: UIImage?
+
+    func makeCoordinator() -> Coordinator {
+        Coordinator(self)
+    }
+
+    class Coordinator: NSObject, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
+        let parent: ImagePicker
+
+        init(_ parent: ImagePicker) {
+            self.parent = parent
+        }
+
+        func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+            if let uiImage = info[.originalImage] as? UIImage {
+                parent.image = uiImage
+            }
+            picker.dismiss(animated: true)
+        }
+
+        func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+            picker.dismiss(animated: true)
+        }
+    }
+
+    func makeUIViewController(context: Context) -> UIImagePickerController {
+        let picker = UIImagePickerController()
+        picker.delegate = context.coordinator
+        return picker
+    }
+
+    func updateUIViewController(_ uiViewController: UIImagePickerController, context: Context) {}
+}
+
+
+// MARK: - Stat View
+
+import SwiftUI
+
+struct StatView: View {
+    let label: String
+    let value: String
+
+    var body: some View {
+        VStack(spacing: 4) {
+            Text(value)
+                .font(.headline)
+                .bold()
+                .foregroundColor(.white)
+            Text(label)
+                .font(.caption)
+                .foregroundColor(.gray)
+        }
+    }
+}
+
 
 
 struct ContentView_Previews: PreviewProvider {
