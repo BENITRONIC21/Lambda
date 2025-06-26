@@ -272,10 +272,16 @@ struct LoopingVideoPlayer: UIViewRepresentable {
     func updateUIView(_ uiView: UIView, context: Context) {}
 }
 
+//MARK: Blackboard
 import SwiftUI
 
 enum ToolMode {
     case move, draw, postIt
+}
+
+enum BlackboardElement {
+    case path(ColoredPath)
+    case postIt(PostIt)
 }
 
 struct PostIt: Identifiable {
@@ -285,15 +291,23 @@ struct PostIt: Identifiable {
     var text: String
 }
 
+struct ColoredPath: Identifiable {
+    let id = UUID()
+    let path: Path
+    let color: Color
+}
+
 struct BlackboardView: View {
     @State private var mode: ToolMode = .move
-    @State private var paths: [Path] = []
+    @State private var paths: [ColoredPath] = []
     @State private var currentPath = Path()
+    @State private var currentPathColor: Color = .white
     @State private var scale: CGFloat = 1.0
     @State private var offset: CGSize = .zero
     @State private var pencilColor: Color = .white
     @State private var postItColor: Color = .yellow
     @State private var postIts: [PostIt] = []
+    @State private var elementStack: [BlackboardElement] = []
 
     @GestureState private var gestureOffset: CGSize = .zero
     @GestureState private var varGestureScale: CGFloat = 1.0
@@ -308,19 +322,17 @@ struct BlackboardView: View {
                     canvasView
                         .scaleEffect(scale * varGestureScale)
                         .offset(x: offset.width + gestureOffset.width, y: offset.height + gestureOffset.height)
-                        // Applying main drag and zoom gesture
                         .gesture(mainCanvasGesture)
-                        // Applying tap gesture specifically for post-its
-                        .simultaneousGesture(postItPlacementGesture(in: geometry.size)) // Changed to a drag gesture for location
+                        .simultaneousGesture(postItPlacementGesture(in: geometry.size))
                 }
 
-                // 🛠 Floating Toolbar pinned to top-left corner
                 VStack(alignment: .leading, spacing: 12) {
                     ToolButton(icon: "hand.tap", isSelected: mode == .move) {
                         mode = .move
                     }
                     ToolButton(icon: "pencil", isSelected: mode == .draw) {
                         mode = .draw
+                        currentPathColor = pencilColor
                     }
                     ColorPicker("", selection: $pencilColor)
                         .labelsHidden()
@@ -334,10 +346,16 @@ struct BlackboardView: View {
                         .frame(width: 36, height: 36)
 
                     ToolButton(icon: "arrow.uturn.backward") {
-                        if !paths.isEmpty {
-                            paths.removeLast()
-                        } else if !postIts.isEmpty {
-                            postIts.removeLast()
+                        guard let last = elementStack.popLast() else { return }
+                        switch last {
+                        case .path(let pathToRemove):
+                            if let index = paths.firstIndex(where: { $0.id == pathToRemove.id }) {
+                                paths.remove(at: index)
+                            }
+                        case .postIt(let postItToRemove):
+                            if let index = postIts.firstIndex(where: { $0.id == postItToRemove.id }) {
+                                postIts.remove(at: index)
+                            }
                         }
                     }
                 }
@@ -345,8 +363,8 @@ struct BlackboardView: View {
                 .background(Color.black)
                 .cornerRadius(12)
                 .padding(.leading)
-                .padding(.top, 60) // push it below the nav bar
-                .frame(maxWidth: .infinity, alignment: .topLeading) // pin to top-left!
+                .padding(.top, 60)
+                .frame(maxWidth: .infinity, alignment: .topLeading)
             }
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
@@ -357,19 +375,21 @@ struct BlackboardView: View {
                         .bold()
                 }
             }
-
+        }
+        .onChange(of: pencilColor) { newColor in
+            if mode == .draw {
+                currentPathColor = newColor
+            }
         }
     }
-    
 
-    // MARK: - Canvas View
     var canvasView: some View {
         ZStack {
             DotGridView()
-            ForEach(paths.indices, id: \.self) { index in
-                paths[index].stroke(pencilColor, lineWidth: 2)
+            ForEach(paths) { coloredPath in
+                coloredPath.path.stroke(coloredPath.color, lineWidth: 2)
             }
-            currentPath.stroke(pencilColor, lineWidth: 2)
+            currentPath.stroke(currentPathColor, lineWidth: 2)
 
             ForEach(postIts) { postIt in
                 PostItView(postIt: postIt, onUpdate: { updated in
@@ -377,32 +397,26 @@ struct BlackboardView: View {
                         postIts[index] = updated
                     }
                 })
-                .position(postIt.position) // Apply position here
+                .position(postIt.position)
             }
         }
-        .contentShape(Rectangle()) // Make the whole ZStack tappable
+        .contentShape(Rectangle())
     }
 
-// MARK: - Post it view
     struct PostItView: View {
         @State var postIt: PostIt
         var onUpdate: (PostIt) -> Void
-
         @FocusState private var isFocused: Bool
-
-        // Define the height of a single post-it note
-        let singlePostItHeight: CGFloat = 120.0 // Adjusted for better proportion, you can fine-tune this
+        let singlePostItHeight: CGFloat = 120.0
 
         var body: some View {
-            // Wrap TextField in a ZStack to ensure frame is respected
             ZStack {
-                TextField("Note", text: $postIt.text, axis: .vertical) // Use axis: .vertical for multiline input
+                TextField("Note", text: $postIt.text, axis: .vertical)
                     .font(.system(size: 12))
                     .padding(8)
                     .background(postIt.color)
                     .cornerRadius(8)
             }
-            // Apply frame and fixedSize to the ZStack wrapper
             .frame(width: 120, height: singlePostItHeight * 4)
             .fixedSize(horizontal: false, vertical: true)
             .focused($isFocused)
@@ -415,17 +429,15 @@ struct BlackboardView: View {
         }
     }
 
-    // MARK: - Gestures
-    // Combined gesture for move (drag + magnify) and draw (drag)
     var mainCanvasGesture: some Gesture {
-        DragGesture(minimumDistance: mode == .draw ? 0.1 : 0) // Only require minimumDistance for drawing
-            .updating($gestureOffset) { value, state, _ in // Use updating for gestureOffset
+        DragGesture(minimumDistance: mode == .draw ? 0.1 : 0)
+            .updating($gestureOffset) { value, state, _ in
                 if mode == .move {
                     state = value.translation
                 }
             }
             .onChanged { value in
-                if mode == .draw { // Only handle draw logic here
+                if mode == .draw {
                     let point = CGPoint(
                         x: (value.location.x - offset.width) / scale,
                         y: (value.location.y - offset.height) / scale
@@ -442,40 +454,41 @@ struct BlackboardView: View {
                     offset.width += value.translation.width
                     offset.height += value.translation.height
                 } else if mode == .draw {
-                    paths.append(currentPath)
+                    let newPath = ColoredPath(path: currentPath, color: currentPathColor)
+                    paths.append(newPath)
+                    elementStack.append(.path(newPath))
                     currentPath = Path()
                 }
             }
-        .simultaneously(with: MagnificationGesture()
-            .updating($varGestureScale) { value, state, _ in
-                if mode == .move {
-                    state = value
+            .simultaneously(with: MagnificationGesture()
+                .updating($varGestureScale) { value, state, _ in
+                    if mode == .move {
+                        state = value
+                    }
                 }
-            }
-            .onEnded { value in
-                if mode == .move {
-                    scale *= value
+                .onEnded { value in
+                    if mode == .move {
+                        scale *= value
+                    }
                 }
-            }
-        )
+            )
     }
 
-    // Drag gesture with minimumDistance 0 for tap location for adding Post-it notes
     func postItPlacementGesture(in size: CGSize) -> some Gesture {
-        DragGesture(minimumDistance: 0) // Use DragGesture with minimumDistance 0 for tap-like behavior
+        DragGesture(minimumDistance: 0)
             .onEnded { value in
                 guard mode == .postIt else { return }
-                // Convert tap location taking current offset & scale into account
                 let transformed = CGPoint(
                     x: (value.location.x - offset.width) / scale,
                     y: (value.location.y - offset.height) / scale
                 )
-                postIts.append(PostIt(position: transformed, color: postItColor, text: ""))
+                let newPostIt = PostIt(position: transformed, color: postItColor, text: "")
+                postIts.append(newPostIt)
+                elementStack.append(.postIt(newPostIt))
             }
     }
 }
 
-// MARK: - Tool Button
 struct ToolButton: View {
     let icon: String
     var isSelected: Bool = false
@@ -492,8 +505,6 @@ struct ToolButton: View {
     }
 }
 
-
-// MARK: - Dot Grid
 struct DotGridView: View {
     let spacing: CGFloat = 20
 
@@ -510,6 +521,7 @@ struct DotGridView: View {
         }
     }
 }
+
 struct CanvasWrapper<Content: View>: View {
     let content: () -> Content
 
@@ -523,7 +535,6 @@ struct CanvasWrapper<Content: View>: View {
         }
     }
 }
-
 
 
 // ✅ Each view uses the custom top bar
@@ -1315,7 +1326,7 @@ struct PracticeView: View {
                                             .stroke(Color(red: 0.3608, green: 0.8784, blue: 0.6118), lineWidth: 2)
                                             .frame(height: 200)
 
-                                        Text("Your exercise will be  generated here.")
+                                        Text("Your exercise will be generated here.")
                                             .foregroundColor(.gray)
                                             .font(.headline)
                                         }
