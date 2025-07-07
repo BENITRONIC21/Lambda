@@ -947,8 +947,7 @@ struct TrigonometryView: View {
                             .resizable()
                             .scaledToFit()
                             .frame(maxWidth: .infinity)
-                            .cornerRadius(12)
-                        Text("And each of these functions have their respective inverse functions:")
+                        Text("And each of these functions have their respective reciprocal functions:")
                             .foregroundColor(.white)
                             .font(.body)
                             .frame(maxWidth: .infinity, alignment: .leading)
@@ -956,7 +955,10 @@ struct TrigonometryView: View {
                             .resizable()
                             .scaledToFit()
                             .frame(maxWidth: .infinity)
-                            .cornerRadius(12)
+                        Text("Trigonometric functions allow us to calculate sides, angles, and other properties in geometry. They also appear naturally in the real world in the form of waves-like sound waves")
+                            .foregroundColor(.white)
+                            .font(.body)
+                            .frame(maxWidth: .infinity, alignment: .leading)
                     }
                     .padding(.horizontal)
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
@@ -1242,26 +1244,137 @@ struct CreatePostView: View {
 }
 
 
+import SwiftUI
+
+struct MathExercise {
+    let question: String
+    let answer: String
+}
+
+class ExerciseGenerator {
+    func generate(for branch: String) -> MathExercise {
+        switch branch {
+        case "Arithmetic":
+            return [add, subtract, multiply, divide].randomElement()!()
+        case "Algebra":
+            return [solveForX, expandBinomial].randomElement()!()
+        case "Geometry":
+            return [areaOfSquare, areaOfTriangle, perimeterOfRectangle].randomElement()!()
+        case "Trigonometry":
+            return [basicTrig, pythagorean].randomElement()!()
+        case "Calculus":
+            return [derivative, integral].randomElement()!()
+        default:
+            return MathExercise(question: "No branch selected.", answer: "")
+        }
+    }
+
+    // MARK: - Arithmetic
+    private func add() -> MathExercise {
+        let a = Int.random(in: 1...50)
+        let b = Int.random(in: 1...50)
+        return MathExercise(question: "\(a) + \(b) = ?", answer: "\(a + b)")
+    }
+
+    private func subtract() -> MathExercise {
+        let a = Int.random(in: 20...100)
+        let b = Int.random(in: 1...20)
+        return MathExercise(question: "\(a) − \(b) = ?", answer: "\(a - b)")
+    }
+
+    private func multiply() -> MathExercise {
+        let a = Int.random(in: 1...12)
+        let b = Int.random(in: 1...12)
+        return MathExercise(question: "\(a) × \(b) = ?", answer: "\(a * b)")
+    }
+
+    private func divide() -> MathExercise {
+        let b = Int.random(in: 1...10)
+        let a = b * Int.random(in: 1...10)
+        return MathExercise(question: "\(a) ÷ \(b) = ?", answer: "\(a / b)")
+    }
+
+    // MARK: - Algebra
+    private func solveForX() -> MathExercise {
+        let x = Int.random(in: 1...10)
+        let a = Int.random(in: 1...10)
+        let b = x * a
+        return MathExercise(question: "\(a)x = \(b). What is x?", answer: "\(x)")
+    }
+
+    private func expandBinomial() -> MathExercise {
+        let a = Int.random(in: 1...5)
+        let b = Int.random(in: 1...5)
+        let question = "Expand: (x + \(a))(x + \(b))"
+        let answer = "x² + \(a + b)x + \(a * b)"
+        return MathExercise(question: question, answer: answer)
+    }
+
+    // MARK: - Geometry
+    private func areaOfSquare() -> MathExercise {
+        let s = Int.random(in: 1...15)
+        return MathExercise(question: "Area of a square with side \(s)?", answer: "\(s * s)")
+    }
+
+    private func areaOfTriangle() -> MathExercise {
+        let b = Int.random(in: 1...10)
+        let h = Int.random(in: 1...10)
+        return MathExercise(question: "Area of triangle with base \(b) and height \(h)?", answer: "\((b * h) / 2)")
+    }
+
+    private func perimeterOfRectangle() -> MathExercise {
+        let l = Int.random(in: 1...10)
+        let w = Int.random(in: 1...10)
+        return MathExercise(question: "Perimeter of a rectangle \(l)×\(w)?", answer: "\(2 * (l + w))")
+    }
+
+    // MARK: - Trigonometry
+    private func basicTrig() -> MathExercise {
+        return MathExercise(question: "What is cos(0°)?", answer: "1")
+    }
+
+    private func pythagorean() -> MathExercise {
+        let a = Int.random(in: 3...10)
+        let b = Int.random(in: 3...10)
+        let c = Int(sqrt(Double(a * a + b * b)))
+        return MathExercise(question: "If a = \(a), b = \(b), find hypotenuse c.", answer: "\(c)")
+    }
+
+    // MARK: - Calculus
+    private func derivative() -> MathExercise {
+        let n = Int.random(in: 2...5)
+        return MathExercise(question: "d/dx of x^\(n) is...?", answer: "\(n)x^\(n - 1)")
+    }
+
+    private func integral() -> MathExercise {
+        let n = Int.random(in: 1...4)
+        return MathExercise(question: "∫x^\(n) dx = ?", answer: "x^\(n + 1)/\(n + 1) + C")
+    }
+}
+
 struct PracticeView: View {
     @State private var selectedBranch: String = "Choose branch"
-    
+    @State private var currentExercise: MathExercise?
+    @State private var userAnswer: String = ""
+    @State private var feedback: String = ""
+
     let branches = ["Arithmetic", "Algebra", "Geometry", "Trigonometry", "Calculus"]
-    
+    let generator = ExerciseGenerator()
+
     var body: some View {
         NavigationView {
             VStack(spacing: 0) {
                 CustomNavigationBar()
-                
+
                 ScrollView {
                     VStack(spacing: 20) {
-                        // 🔷 Main Exercise Generator Rectangle
                         RoundedRectangle(cornerRadius: 20)
                             .fill(Color(red: 0.15, green: 0.15, blue: 0.15))
                             .overlay(
                                 RoundedRectangle(cornerRadius: 20)
                                     .stroke(Color(red: 0.3608, green: 0.8784, blue: 0.6118), lineWidth: 2)
                             )
-                            .frame(height: 600) // Increased height to fit the button
+                            .frame(height: 600)
                             .overlay(
                                 VStack(alignment: .leading, spacing: 16) {
                                     Text("Exercise generator")
@@ -1269,8 +1382,7 @@ struct PracticeView: View {
                                         .bold()
                                         .foregroundColor(Color(red: 0.3608, green: 0.8784, blue: 0.6118))
                                         .padding(.top, 12)
-                                    
-                                    // 🔽 Branch Dropdown
+
                                     Menu {
                                         ForEach(branches, id: \.self) { branch in
                                             Button(action: {
@@ -1293,43 +1405,71 @@ struct PracticeView: View {
                                                 .stroke(Color(red: 0.3608, green: 0.8784, blue: 0.6118), lineWidth: 2)
                                         )
                                     }
-                                    
-                                    // ✅ Generate Button (shows only if branch is selected)
+
                                     if selectedBranch != "Choose branch" {
                                         HStack {
                                             Spacer()
-
                                             Button(action: {
-                                                print("Generating exercise for \(selectedBranch)")
-                                            })
-                                            {
+                                                currentExercise = generator.generate(for: selectedBranch)
+                                                userAnswer = ""
+                                                feedback = ""
+                                            }) {
                                                 Text("Generate exercise")
                                                     .foregroundColor(Color(red: 0.15, green: 0.15, blue: 0.15))
                                                     .fontWeight(.bold)
                                                     .padding()
-                                                    .frame(width: 315) // You can adjust width if needed
+                                                    .frame(width: 315)
                                                     .background(
                                                         RoundedRectangle(cornerRadius: 10)
                                                             .fill(Color(red: 0.3608, green: 0.8784, blue: 0.6118))
                                                     )
                                             }
-
                                             Spacer()
-                                            
                                         }
                                         .transition(.opacity)
-
-                                        .transition(.opacity)
                                     }
+
                                     ZStack {
                                         RoundedRectangle(cornerRadius: 10)
                                             .stroke(Color(red: 0.3608, green: 0.8784, blue: 0.6118), lineWidth: 2)
                                             .frame(height: 200)
 
-                                        Text("Your exercise will be generated here.")
-                                            .foregroundColor(.gray)
-                                            .font(.headline)
+                                        VStack(spacing: 12) {
+                                            if let exercise = currentExercise {
+                                                Text(exercise.question)
+                                                    .foregroundColor(.white)
+                                                    .font(.headline)
+
+                                                TextField("Your answer", text: $userAnswer)
+                                                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                                                    .keyboardType(.default)
+
+                                                Button("Check Answer") {
+                                                    if userAnswer.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
+                                                        == exercise.answer.lowercased() {
+                                                        feedback = "✅ Correct!"
+                                                    } else {
+                                                        feedback = "❌ Incorrect. Answer: \(exercise.answer)"
+                                                    }
+                                                }
+                                                .foregroundColor(Color(red: 0.15, green: 0.15, blue: 0.15))
+                                                .padding(.horizontal)
+                                                .padding(.vertical, 8)
+                                                .background(Color(red: 0.3608, green: 0.8784, blue: 0.6118))
+                                                .cornerRadius(8)
+
+                                                Text(feedback)
+                                                    .foregroundColor(.gray)
+                                                    .font(.subheadline)
+                                            } else {
+                                                Text("Your exercise will be generated here.")
+                                                    .foregroundColor(.gray)
+                                                    .font(.headline)
+                                            }
                                         }
+                                        .padding()
+                                    }
+
                                     HStack {
                                         Spacer()
                                         NavigationLink(destination: BlackboardView()) {
@@ -1341,9 +1481,6 @@ struct PracticeView: View {
                                         }
                                         Spacer()
                                     }
-                                    .padding(.top, 10)
-
-                                    .padding(.horizontal)
                                     .padding(.top, 10)
 
                                     Spacer()
